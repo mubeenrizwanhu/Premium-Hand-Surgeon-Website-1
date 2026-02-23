@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Outcomes() {
   const cases = [
@@ -29,54 +30,70 @@ export default function Outcomes() {
   ];
 
   return (
-    <section id="outcomes" className="bg-white py-16 md:py-24">
+    <section id="outcomes" className="py-24 bg-surface">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] mb-4">
-            Patient Outcomes
-          </h2>
-          <p className="text-xl text-[#6B7280] max-w-3xl mx-auto">
-            Real results from patients who have regained full function and returned to their passions
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end justify-center mb-16 gap-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-2xl"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
+              Real Results, <br />
+              <span className="text-accent">Exceptional</span> Recovery
+            </h2>
+            <p className="text-lg text-primary/60">
+              Our patients' success is our greatest achievement. See how we've helped others return to what they love.
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           {cases.map((caseStudy, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2 }}
+              className="relative group"
             >
-              <img
-                src={caseStudy.image}
-                alt={`${caseStudy.role} success story`}
-                className="w-full h-56 object-cover"
-              />
-              <div className="p-6">
-                <div className="flex items-center mb-3">
-                  {[...Array(caseStudy.satisfaction)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="text-[#2E8C82] fill-current"
-                      size={20}
-                    />
-                  ))}
-                </div>
-                <h3 className="text-xl font-semibold text-[#0B1F3A] mb-2">
-                  {caseStudy.role}
-                </h3>
-                <p className="text-sm text-[#3E6FA8] font-medium mb-3">
-                  {caseStudy.condition}
-                </p>
-                <p className="text-[#6B7280] leading-relaxed mb-4">
-                  {caseStudy.outcome}
-                </p>
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="text-sm text-[#111827]">
-                    <span className="font-medium">Recovery Time:</span> {caseStudy.recovery}
+              <div className="relative h-[450px] overflow-hidden rounded-[2.5rem] shadow-xl">
+                <img
+                  src={caseStudy.image}
+                  alt={`${caseStudy.role} success story`}
+                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent opacity-80" />
+
+                {/* Overlapping Info Card */}
+                <div className="absolute inset-x-4 bottom-4 glass-card p-6 rounded-[2rem] border-white/10 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="flex items-center space-x-1 mb-3">
+                    {[...Array(caseStudy.satisfaction)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="text-accent fill-accent"
+                        size={14}
+                      />
+                    ))}
+                  </div>
+                  <h3 className="text-xl font-bold text-primary mb-1">
+                    {caseStudy.role}
+                  </h3>
+                  <p className="text-sm font-bold text-accent mb-4 uppercase tracking-wider">
+                    {caseStudy.condition}
                   </p>
+                  <p className="text-primary/70 text-sm leading-relaxed line-clamp-2">
+                    {caseStudy.outcome}
+                  </p>
+                  <div className="mt-4 pt-4 border-t border-primary/5 flex justify-between items-center">
+                    <span className="text-xs font-bold text-primary/40 uppercase">Recovery</span>
+                    <span className="text-sm font-bold text-primary">{caseStudy.recovery}</span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

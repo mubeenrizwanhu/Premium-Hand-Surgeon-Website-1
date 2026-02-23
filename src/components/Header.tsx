@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-interface HeaderProps {
-  onOpenModal: () => void;
-}
-
-export default function Header({ onOpenModal }: HeaderProps) {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -17,54 +14,38 @@ export default function Header({ onOpenModal }: HeaderProps) {
   };
 
   const handleConsultationClick = () => {
-    setIsMenuOpen(false);
-    onOpenModal();
+    scrollToSection('contact');
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="sticky top-0 z-50 glass-card border-none rounded-none shadow-sm"
+    >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold text-[#0B1F3A]">
+            <h1 className="text-2xl font-bold text-primary tracking-tight">
               Elite Hand Surgery
             </h1>
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection('about')}
-              className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium"
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('procedures')}
-              className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium"
-            >
-              Procedures
-            </button>
-            <button
-              onClick={() => scrollToSection('outcomes')}
-              className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium"
-            >
-              Outcomes
-            </button>
-            <button
-              onClick={() => scrollToSection('reviews')}
-              className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium"
-            >
-              Reviews
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium"
-            >
-              Contact
-            </button>
+            {['About', 'Procedures', 'Outcomes', 'Reviews', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase())}
+                className="text-primary/70 hover:text-primary transition-colors font-medium relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+              </button>
+            ))}
             <button
               onClick={handleConsultationClick}
-              className="bg-[#2E8C82] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#267269] transition-colors min-h-[44px]"
+              className="bg-accent text-white px-6 py-3 rounded-full font-semibold hover:bg-accent/90 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-accent/20 min-h-[44px]"
             >
               Request Your Consultation
             </button>
@@ -72,7 +53,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-[#0B1F3A]"
+            className="md:hidden p-2 text-primary"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -80,48 +61,31 @@ export default function Header({ onOpenModal }: HeaderProps) {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden pb-4 border-t border-gray-200 mt-2">
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="md:hidden pb-6 border-t border-primary/5 mt-2"
+          >
             <nav className="flex flex-col space-y-4 pt-4">
-              <button
-                onClick={() => scrollToSection('about')}
-                className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium text-left py-2"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection('procedures')}
-                className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium text-left py-2"
-              >
-                Procedures
-              </button>
-              <button
-                onClick={() => scrollToSection('outcomes')}
-                className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium text-left py-2"
-              >
-                Outcomes
-              </button>
-              <button
-                onClick={() => scrollToSection('reviews')}
-                className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium text-left py-2"
-              >
-                Reviews
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-[#111827] hover:text-[#3E6FA8] transition-colors font-medium text-left py-2"
-              >
-                Contact
-              </button>
+              {['About', 'Procedures', 'Outcomes', 'Reviews', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="text-primary/70 hover:text-primary transition-colors font-medium text-left py-2"
+                >
+                  {item}
+                </button>
+              ))}
               <button
                 onClick={handleConsultationClick}
-                className="bg-[#2E8C82] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#267269] transition-colors min-h-[44px] text-center"
+                className="bg-accent text-white px-6 py-3 rounded-full font-semibold hover:bg-accent/90 transition-colors min-h-[44px] text-center"
               >
                 Request Your Consultation
               </button>
             </nav>
-          </div>
+          </motion.div>
         )}
       </div>
-    </header>
+    </motion.header>
   );
 }

@@ -1,81 +1,100 @@
 import { Star, Quote } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Reviews() {
   const reviews = [
     {
       name: 'Michael Thompson',
       condition: 'Carpal Tunnel Surgery',
-      date: 'January 2024',
-      text: "After struggling with numbness and pain for two years, I finally decided to see Dr. Mitchell. She was thorough, explained everything clearly, and the surgery was far easier than I expected. Within three weeks, I was back to work without any discomfort. I wish I hadn't waited so long.",
+      date: 'Jan 2024',
+      text: "After struggling with numbness and pain for two years, I finally decided to see Dr. Mitchell. She was thorough, explained everything clearly, and the surgery was far easier than I expected.",
       rating: 5,
     },
     {
       name: 'Jennifer Rodriguez',
       condition: 'Trigger Finger Release',
-      date: 'November 2023',
-      text: 'As a dental hygienist, my hands are my livelihood. Dr. Mitchell understood the urgency and scheduled me quickly. The procedure was straightforward, and her follow-up care was exceptional. My finger works perfectly now, and I have full confidence in my hands again.',
+      date: 'Nov 2023',
+      text: 'As a dental hygienist, my hands are my livelihood. Dr. Mitchell understood the urgency and scheduled me quickly. The procedure was straightforward, and her follow-up care was exceptional.',
       rating: 5,
     },
     {
       name: 'David Chen',
       condition: 'Tendon Repair',
-      date: 'September 2023',
-      text: "I injured my hand in a cycling accident and was told by another surgeon that full recovery was unlikely. Dr. Mitchell performed a complex tendon repair, and after her rehabilitation program, I regained 100% function. She's truly an expert in her field.",
+      date: 'Sep 2023',
+      text: "I injured my hand in a cycling accident and was told by another surgeon that full recovery was unlikely. Dr. Mitchell performed a complex tendon repair, and after her rehabilitation program, I regained 100% function.",
       rating: 5,
     },
     {
       name: 'Patricia Williams',
-      condition: 'Thumb Arthritis Treatment',
-      date: 'June 2023',
-      text: 'The arthritis in my thumb had become unbearable. Dr. Mitchell recommended joint replacement, which I was nervous about, but she walked me through everything. The surgery went perfectly, and now I can garden, cook, and do everything I love without constant pain.',
+      condition: 'Thumb Arthritis',
+      date: 'Jun 2023',
+      text: 'The arthritis in my thumb had become unbearable. Dr. Mitchell recommended joint replacement, which I was nervous about, but she walked me through everything. The surgery went perfectly.',
       rating: 5,
     },
     {
       name: 'Robert Anderson',
       condition: 'Wrist Fracture Repair',
-      date: 'March 2024',
-      text: 'I fractured my wrist in three places and needed immediate surgical intervention. Dr. Mitchell and her team were professional, reassuring, and skilled. The surgery was successful, and my wrist healed beautifully. I have full range of motion and no limitations.',
+      date: 'Mar 2024',
+      text: 'I fractured my wrist in three places and needed immediate surgical intervention. Dr. Mitchell and her team were professional, reassuring, and skilled. The surgery was successful.',
       rating: 5,
     },
   ];
 
   return (
-    <section id="reviews" className="bg-white py-16 md:py-24">
+    <section id="reviews" className="py-24 bg-surface">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0B1F3A] mb-4">
-            Patient Reviews
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6">
+            Voices of Recovery
           </h2>
-          <p className="text-xl text-[#6B7280] max-w-3xl mx-auto">
-            Hear from patients who have experienced exceptional care and successful outcomes
+          <p className="text-lg text-primary/60 max-w-2xl mx-auto">
+            Experience the difference of specialized care through the stories of those who have regained their strength.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <div
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {reviews.slice(0, 3).map((review, index) => (
+            <motion.div
               key={index}
-              className="bg-[#F7F9FB] p-8 rounded-xl relative"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="glass-card p-10 rounded-[2.5rem] border-white/40 shadow-2xl relative group hover:-translate-y-2 transition-transform duration-500 bg-white/60 flex flex-col justify-between h-full"
             >
-              <Quote className="text-[#3E6FA8] opacity-20 absolute top-4 right-4" size={48} />
-              <div className="flex items-center mb-4">
-                {[...Array(review.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="text-[#2E8C82] fill-current"
-                    size={20}
-                  />
-                ))}
+              <Quote className="text-accent/10 absolute top-8 right-8 group-hover:text-accent/20 transition-colors" size={60} />
+
+              <div>
+                <div className="flex items-center space-x-1 mb-6">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="text-accent fill-accent"
+                      size={14}
+                    />
+                  ))}
+                </div>
+
+                <p className="text-primary italic leading-relaxed mb-8 text-lg font-medium relative z-10">
+                  "{review.text}"
+                </p>
               </div>
-              <p className="text-[#111827] leading-relaxed mb-6">
-                "{review.text}"
-              </p>
-              <div className="border-t border-gray-200 pt-4">
-                <p className="font-semibold text-[#0B1F3A]">{review.name}</p>
-                <p className="text-sm text-[#6B7280]">{review.condition}</p>
-                <p className="text-sm text-[#6B7280]">{review.date}</p>
+
+              <div className="flex items-center space-x-4 pt-6 border-t border-primary/5">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
+                  {review.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-bold text-primary">{review.name}</p>
+                  <p className="text-xs font-bold text-accent uppercase tracking-wider">{review.condition}</p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

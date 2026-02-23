@@ -1,54 +1,129 @@
 import { Award, Users, Clock } from 'lucide-react';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
+import { useRef } from 'react';
 
-interface HeroProps {
-  onOpenModal: () => void;
-}
+export default function Hero() {
+  const containerRef = useRef(null);
 
-export default function Hero({ onOpenModal }: HeroProps) {
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
 
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section ref={containerRef} className="relative overflow-hidden pt-20 pb-16 md:pt-32 md:pb-24">
+      {/* Decorative floating elements */}
+      <motion.div
+        animate={{
+          y: [0, -20, 0],
+          rotate: [0, 10, 0]
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+        className="absolute top-20 right-[10%] w-32 h-32 bg-accent/5 rounded-full blur-3xl -z-10"
+      />
+
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#0B1F3A] leading-tight">
-              Expert Hand Surgery for Complete Recovery
-            </h2>
-            <p className="text-xl text-[#6B7280] leading-relaxed">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid md:grid-cols-2 gap-12 items-center"
+        >
+          <div className="space-y-8">
+            <motion.div variants={itemVariants}>
+              <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent font-semibold text-sm tracking-wide mb-4">
+                BOARD-CERTIFIED EXCELLENCE
+              </span>
+              <h2 className="text-5xl md:text-7xl font-bold text-primary leading-[1.1] tracking-tight">
+                Expert Hand <br />
+                <span className="text-accent underline decoration-accent/20 underline-offset-8">Surgery</span> Care
+              </h2>
+            </motion.div>
+
+            <motion.p variants={itemVariants} className="text-xl text-primary/60 leading-relaxed max-w-lg">
               Restore function, eliminate pain, and return to the activities you love with specialized hand surgery care.
-            </p>
+            </motion.p>
 
-            <div className="space-y-3 pt-4">
-              <div className="flex items-center space-x-3">
-                <Award className="text-[#3E6FA8] flex-shrink-0" size={24} />
-                <span className="text-[#111827]">Board-certified hand surgeon with fellowship training</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Users className="text-[#3E6FA8] flex-shrink-0" size={24} />
-                <span className="text-[#111827]">Over 5,000 successful hand procedures performed</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Clock className="text-[#3E6FA8] flex-shrink-0" size={24} />
-                <span className="text-[#111827]">Same-week consultations available</span>
-              </div>
+            <motion.div variants={itemVariants} className="space-y-4 pt-2">
+              {[
+                { icon: Award, text: "Fellowship trained specialist" },
+                { icon: Users, text: "5,000+ successful procedures" },
+                { icon: Clock, text: "Same-week consultations" }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center space-x-4 group">
+                  <div className="p-2 rounded-lg bg-white shadow-sm border border-primary/5 group-hover:scale-110 transition-transform">
+                    <item.icon className="text-accent" size={20} />
+                  </div>
+                  <span className="text-primary/80 font-medium">{item.text}</span>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="pt-4">
+              <motion.button
+                onClick={scrollToContact}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative bg-primary text-white px-10 py-5 rounded-full font-bold text-lg overflow-hidden transition-all shadow-2xl shadow-primary/20"
+              >
+                <span className="relative z-10 transition-colors group-hover:text-white">Request Your Consultation</span>
+                <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </motion.button>
+            </motion.div>
+          </div>
+
+          <motion.div
+            style={{ y, opacity }}
+            className="relative"
+          >
+            <div className="absolute -inset-4 bg-accent/10 rounded-[2rem] blur-2xl -z-10 animate-pulse" />
+            <div className="relative overflow-hidden rounded-[2rem] shadow-2xl border border-white/20">
+              <img
+                src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Professional hand surgeon in medical setting"
+                className="w-full h-[600px] object-cover scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+
+              {/* Stats Overlay Card */}
+              <motion.div
+                initial={{ x: 50, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                className="absolute bottom-6 right-6 glass-card p-6 rounded-2xl max-w-[200px]"
+              >
+                <p className="text-3xl font-bold text-primary">98%</p>
+                <p className="text-sm text-primary/60 font-medium">Patient Satisfaction Rate</p>
+              </motion.div>
             </div>
-
-            <button
-              onClick={onOpenModal}
-              className="bg-[#2E8C82] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#267269] transition-colors min-h-[44px] text-lg mt-6"
-            >
-              Request Your Consultation
-            </button>
-          </div>
-
-          <div className="relative">
-            <img
-              src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="Professional hand surgeon in medical setting"
-              className="rounded-xl shadow-lg w-full h-[500px] object-cover"
-            />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,26 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-    -webkit-font-smoothing: antialiased;
+    @apply font-body bg-surface text-primary antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
     line-height: 1.2;
   }
 
   p {
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   * {
     scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
+  }
+
+  .mesh-gradient {
+    background-color: #F8FAFC;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(174, 50%, 36%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(214, 68%, 14%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(174, 50%, 36%, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(214, 68%, 14%, 0.05) 0px, transparent 50%);
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-surface;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/10 rounded-full hover:bg-primary/20 transition-colors;
   }
 }

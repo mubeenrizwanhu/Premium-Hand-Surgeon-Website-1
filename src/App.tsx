@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import TrustBar from './components/TrustBar';
@@ -9,31 +8,26 @@ import Process from './components/Process';
 import Reviews from './components/Reviews';
 import FinalCTA from './components/FinalCTA';
 import ConsultationForm from './components/ConsultationForm';
-import ConsultationModal from './components/ConsultationModal';
 import Footer from './components/Footer';
+import BackgroundMesh from './components/BackgroundMesh';
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-
   return (
-    <div className="min-h-screen bg-white">
-      <Header onOpenModal={openModal} />
+    <div className="relative min-h-screen">
+      <BackgroundMesh />
+      <Header />
       <main>
-        <Hero onOpenModal={openModal} />
+        <Hero />
         <TrustBar />
         <About />
         <Procedures />
         <Outcomes />
         <Process />
         <Reviews />
-        <FinalCTA onOpenModal={openModal} />
-        <ConsultationForm onOpenModal={openModal} />
+        <FinalCTA />
+        <ConsultationForm />
       </main>
       <Footer />
-      <ConsultationModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }
