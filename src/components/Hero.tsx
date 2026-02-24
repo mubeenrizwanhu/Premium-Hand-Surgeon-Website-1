@@ -105,22 +105,11 @@ export default function Hero() {
             <div className="absolute -inset-4 bg-accent/10 rounded-[2rem] blur-2xl -z-10 animate-pulse" />
             <div className="relative overflow-hidden rounded-[2rem] shadow-2xl border border-white/20">
               <img
-                src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Professional hand surgeon in medical setting"
+                src="https://images.pexels.com/photos/3985168/pexels-photo-3985168.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt="Dr. Sarah Mitchell - Clinical Precision"
                 className="w-full h-[600px] object-cover scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
-
-              {/* Stats Overlay Card */}
-              <motion.div
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 1 }}
-                className="absolute bottom-6 right-6 glass-card p-6 rounded-2xl max-w-[200px]"
-              >
-                <p className="text-3xl font-bold text-primary">98%</p>
-                <p className="text-sm text-primary/60 font-medium">Patient Satisfaction Rate</p>
-              </motion.div>
             </div>
           </motion.div>
         </motion.div>

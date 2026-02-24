@@ -20,10 +20,21 @@ export default function About() {
           >
             <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white">
               <img
-                src="https://images.pexels.com/photos/5452201/pexels-photo-5452201.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Dr. Sarah Mitchell"
+                src="https://img.freepik.com/premium-photo/portrait-beautiful-female-doctor-white-medical-uniform-holding-stethoscope-smiling-camera_35674-9097.jpg"
+                alt="Dr. Sarah Mitchell - Board Certified Hand Surgeon"
                 className="w-full h-[600px] object-cover scale-105 hover:scale-100 transition-transform duration-700"
               />
+              {/* Stats Overlay Card */}
+              <motion.div
+                initial={{ x: 50, opacity: 0 }}
+                whileInView={{ x: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="absolute bottom-6 right-6 glass-card p-6 rounded-2xl max-w-[200px]"
+              >
+                <p className="text-3xl font-bold text-primary">98%</p>
+                <p className="text-sm text-primary/60 font-medium">Patient Satisfaction Rate</p>
+              </motion.div>
             </div>
             {/* Decorative background shape */}
             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-accent/20 rounded-full blur-3xl -z-10" />
